@@ -1,8 +1,8 @@
 function init(){
     
     $("#principal").show();
-    $("#secundario").hide();
-    $("#formulario_tarea").on("submit",function(e){
+    $("#formulario_tarea").hide();
+    $("#guardar").on("click",function(e){
         e.preventDefault();
   
     tarea_1 =$("#tarea").val();
@@ -28,22 +28,52 @@ function init(){
  
 }
 
+function limpiar(){
+	$("#tarea").val("");
+	$("#instrucciones").val("");
+	
+}
+
+function mostrarform(flag){
+   limpiar();
+    
+   $.post("../ajax/tarea.php?op=mostrar",{id : flag},
+   function(data,status)
+   {
+      
+       data=JSON.parse(data);
+       $("#principal").hide();
+       $("#formulario_tarea").show();
+       $("#cabeza").hide();
+       $("#guardar").hide();
+       $("#tarea").val(data.nombre);
+       $("#instrucciones").val(data.instrucciones);
+      
+    })
+     
+}
+
+
+
+
 function buscar(){
    var palabra=$("#buscador").val();
   
     $.post("../ajax/tarea.php?op=buscar",
     {"palabra":palabra},
     function(data){
-       
-        window.location="escritorio.php?id="+data; 
-       
-        
+      
+        window.location="escritorio.php?data="+data; 
+      
+    
     }
     );
 
-  
  }
+ function regresar(){
 
+    window.location="escritorio.php";
+ }
 
 function subir(id){
    
@@ -70,7 +100,9 @@ function bajar(id){
 
 function agregar(){
    
-   window.location="tarea.php";
+    $("#principal").hide();
+    $("#formulario_tarea").show();
+    $("#cabeza").hide();
    
 }
 
@@ -98,9 +130,6 @@ function countCharsIns(obj){
     }
 }
 
-function tarea(e){
 
-   
-}
 
 init();

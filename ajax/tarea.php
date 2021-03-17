@@ -1,7 +1,7 @@
 <?php 
 session_start();
 require_once "../modelos/Tarea.php";
-$seguidor=$_SESSION["id"];
+
 $tarea=new Tarea();
 
 
@@ -11,7 +11,7 @@ switch ($_GET["op"]) {
         $tarea_1=$_POST['tarea'];
 		$instruciones=$_POST['instrucciones'];
 
-		$rspta=$tarea->insertar($tarea_1,$instruciones,$seguidor);
+		$rspta=$tarea->insertar($tarea_1,$instruciones);
 			echo $rspta ? "Datos registrados correctamente" : "No se pudo registrar todos los datos del usuario";
 		
 		
@@ -33,11 +33,15 @@ switch ($_GET["op"]) {
 
 		$rspta=$tarea->buscar($palabra);
 		echo $rspta['id'];
-	//	$rspta=$tarea->tutoriales($rspta['id']);
-		
 		
 	break;
 
-   
+	case 'mostrar':
+		$id=$_POST['id'];
+	
+		$rspta=$tarea->mostrar($id);
+		echo json_encode($rspta);
+		break;
+
     }
 ?>

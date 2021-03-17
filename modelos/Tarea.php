@@ -10,8 +10,8 @@ public function __construct(){
 }
 
 //metodo insertar regiustro
-public function insertar($tarea,$instrucciones,$seguidor){
-	$sql="INSERT INTO tarea (idseguidor,nombre,instrucciones,fecha) VALUES ('$seguidor','$tarea','$instrucciones',NOW())";
+public function insertar($tarea,$instrucciones){
+	$sql="INSERT INTO tarea (nombre,instrucciones,fecha) VALUES ('$tarea','$instrucciones',NOW())";
 	$idnew=ejecutarConsulta_retornarID($sql);
 	return $idnew;
 }
@@ -44,14 +44,9 @@ public function buscar($palabra){
 	
 }
 
-public function editar($login,$clave){
-	$sql="UPDATE tarea SET clave='$clave' WHERE nombre='$login'";
-	return ejecutarConsulta($sql);
-}
-
-public function verificar($login,$clave){
-    	$sql="SELECT id FROM seguidor WHERE nombre='$login' AND clave='$clave'"; 
-    	return ejecutarConsulta($sql);  
+public function mostrar($id){
+	$sql="SELECT * FROM tarea WHERE id='$id'";
+	return ejecutarConsultaSimpleFila($sql);
 }
 
 }
